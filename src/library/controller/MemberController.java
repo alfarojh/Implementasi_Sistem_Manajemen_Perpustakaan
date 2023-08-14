@@ -17,6 +17,7 @@ public class MemberController {
     }
 
     public Member getMemberByIndex(int index) {
+        if (index < 0) return null;
         return members.get(index);
     }
 

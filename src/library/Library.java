@@ -124,9 +124,26 @@ public class Library {
     //================================= Member Section ======================================
 
     public void addMember() {
-
+        String memberName = inputHandler.getInputText("Masukkan nama anggota baru: ");
+        memberController.addMember(memberName);
+        System.out.println("Penambahan member berhasil.");
+        newLine();
     }
 
+    public void removeMember() {
+        String input = inputHandler.getInputText("Masukkan input member: ");
+
+        if (memberController.removeMember(input)) {
+            System.out.println("Member "
+                    + memberController.getMemberByIndex(memberController.getIndexMemberByInput(input)).getName()
+                    + " berhasil dihapus");
+        } else {
+            inputHandler.errorMessage("Member "
+                    + memberController.getMemberByIndex(memberController.getIndexMemberByInput(input)).getName()
+                    + " gagal dihapus");
+        }
+        newLine();
+    }
 
     //================================= Member Section ======================================
 
