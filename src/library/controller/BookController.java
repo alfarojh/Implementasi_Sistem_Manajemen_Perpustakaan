@@ -73,9 +73,9 @@ public class BookController {
         return tempBook;
     }
 
-    public boolean addBook(String ISBN, String title, String writer) {
+    public boolean addBook(String ISBN, String title, String author) {
         if (isBookExistByInput(ISBN)) return false;
-        books.add(new Book(ISBN, title, writer));
+        books.add(new Book(ISBN, title, author));
         return true;
     }
 

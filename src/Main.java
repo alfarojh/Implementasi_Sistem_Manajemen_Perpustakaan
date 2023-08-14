@@ -6,8 +6,8 @@ import library.controller.MemberController;
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
-        library.addBook();
-        library.addBook();
+        library.inisiasi();
+        library.removeBook();
     }
 
 }

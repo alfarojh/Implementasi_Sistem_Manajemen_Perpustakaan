@@ -13,6 +13,12 @@ public class Library {
     private final MemberController memberController = new MemberController();
     private final InputHandler inputHandler = new InputHandler();
 
+    public void inisiasi() {
+        bookController.addBook("123-456-789-012-1", "dfsfsfds", "dfsfdfs");
+        bookController.addBook("125-456-789-012-1", "dsfsdf", "asas");
+    }
+
+    //=================================== Book Section ======================================
     public void addBook() {
         String ISBN = inputHandler.getInputText("Masukkan ISBN: ").replace("-", "");
         boolean error = true;
@@ -56,16 +62,73 @@ public class Library {
         } else {
             inputHandler.errorMessage("Buku gagal ditambahkan.");
         }
+        newLine();
+    }
+
+    public void removeBook() {
+        System.out.println("Pilih hapus buku berdasarkan: ");
+        System.out.println("1. ISBN");
+        System.out.println("2. Nama / Author");
+        System.out.println("0. Keluar");
+        int choice = inputHandler.getIntegerInput("Masukkan pilihan: ");
+
+        switch (choice) {
+            case 0 -> System.out.println("Kembali ke menu utama.\n");
+            case 1 -> {
+                String ISBN = inputHandler.getInputText("Masukkan ISBN: ");
+                if (convertISBN(ISBN).length() > 0) {
+                    if (bookController.removeBook(convertISBN(ISBN))) {
+                        System.out.println("Buku "
+                                + bookController.getBookByIndex(bookController.getIndexBookByInput(convertISBN(ISBN))).getTitle()
+                                + " berhasil dihapus.");
+                    } else {
+                        inputHandler.errorMessage("Buku "
+                                + bookController.getBookByIndex(bookController.getIndexBookByInput(convertISBN(ISBN))).getTitle()
+                                + " gagal dihapus.");
+                    }
+                } else {
+                    inputHandler.errorMessage("ISBN tidak sesuai.");
+                }
+                newLine();
+            }
+            case 2 -> {
+                String input = inputHandler.getInputText("Masukkan judul buku / author: ");
+                if (bookController.removeBook(input)) {
+                    System.out.println("Buku "
+                            + bookController.getBookByIndex(bookController.getIndexBookByInput(input)).getTitle()
+                            + " berhasil dihapus.");
+                } else {
+                    inputHandler.errorMessage("Buku "
+                            + bookController.getBookByIndex(bookController.getIndexBookByInput(input)).getTitle()
+                            + " gagal dihapus.");
+                }
+            }
+            default -> System.out.println("Input diluat batas, kembali ke menu utama.");
+        }
     }
 
     private String convertISBN(String ISBN) {
         String input = ISBN.replace("-", "");
 
-        input = input.substring(0, 3) + "-" + input.substring(3, 6) + "-"
-                + input.substring(6, 9) + "-" + input.substring(9, 12) + "-"
-                + input.charAt(12);
-        return input;
+        try {
+            input = input.substring(0, 3) + "-" + input.substring(3, 6) + "-"
+                    + input.substring(6, 9) + "-" + input.substring(9, 12) + "-"
+                    + input.charAt(12);
+            return input;
+        } catch (Exception e) {
+            return "";
+        }
     }
+    //=================================== Book Section ======================================
+
+    //================================= Member Section ======================================
+
+    public void addMember() {
+
+    }
+
+
+    //================================= Member Section ======================================
 
     // Fungsi untuk menampilkan baris baru sebanyak yang ditentukan.
     private static void newLine(int... count) {
