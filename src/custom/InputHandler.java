@@ -7,7 +7,7 @@ public class InputHandler {
 
     // Menampilkan pesan error dalam teks merah (untuk digunakan pada terminal yang mendukung ANSI escape code)
     public void errorMessage(String message) {
-        System.out.println("\u001B[31m" + message + "\u001B[0m\n");
+        System.out.println("\u001B[31m" + message + "\u001B[0m");
     }
 
     // Fungsi ini memeriksa apakah input merupakan bilangan bulat (digit) dan memiliki operator + atau -
@@ -18,9 +18,9 @@ public class InputHandler {
         // Melakukan validasi untuk memastikan input hanya berisi digit dan merupakan bilangan positif atau negatif
         while (!input.matches("^[-+]?\\d+")) {
             // Jika input tidak valid, tampilkan pesan kesalahan dan minta input lagi
-            errorMessage("Maaf, harap masukkan input berupa bilangan bulat atau menggunakan operator + atau -");
+            errorMessage("Maaf, harap masukkan input berupa bilangan bulat atau menggunakan operator + atau -.");
             System.out.print(message);
-            input = scanner.nextLine();
+            input = scanner.nextLine().trim();
         }
         // Mengubah input menjadi bilangan bulat dan mengembalikannya
         return Integer.parseInt(input);
@@ -34,9 +34,9 @@ public class InputHandler {
         // Melakukan validasi untuk memastikan input hanya berisi digit dan merupakan bilangan positif atau negatif
         while (!input.matches("\\d+")) {
             // Jika input tidak valid, tampilkan pesan kesalahan dan minta input lagi
-            errorMessage("Maaf, harap masukkan input berupa bilangan bulat dan positif");
+            errorMessage("Maaf, harap masukkan input berupa bilangan bulat dan positif.");
             System.out.print(message);
-            input = scanner.nextLine();
+            input = scanner.nextLine().trim();
         }
         // Mengubah input menjadi bilangan bulat dan mengembalikannya
         return Integer.parseInt(input);

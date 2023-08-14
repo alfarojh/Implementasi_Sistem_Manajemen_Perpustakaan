@@ -4,14 +4,14 @@ public class Book {
     // Penggunaan encapsulation untuk ISBN, title, writer, amount, dan status
     private final String ISBN;
     private final String title;
-    private final String writer;
+    private final String author;
     private int amount;
     private String status;
 
-    public Book(String ISBN, String title, String writer) {
+    public Book(String ISBN, String title, String author) {
         this.ISBN = ISBN;
         this.title = title;
-        this.writer = writer;
+        this.author = author;
         this.amount = 1;
         this.status = "active";
     }
@@ -24,8 +24,8 @@ public class Book {
         return title;
     }
 
-    public String getWriter() {
-        return writer;
+    public String getAuthor() {
+        return author;
     }
 
     public int getAmount() {

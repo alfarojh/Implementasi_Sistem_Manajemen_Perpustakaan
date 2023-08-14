@@ -17,7 +17,16 @@ public class BookController {
                 return true;
             } else if (book.getTitle().equalsIgnoreCase(input)) {
                 return true;
-            } else if (book.getWriter().equalsIgnoreCase(input)) {
+            } else if (book.getAuthor().equalsIgnoreCase(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isISBN_Exist(String ISBN) {
+        for (Book book: books) {
+            if (book.getISBN().equals(ISBN)) {
                 return true;
             }
         }
@@ -30,7 +39,7 @@ public class BookController {
                 return indexBook;
             } else if (books.get(indexBook).getTitle().equalsIgnoreCase(input)) {
                 return indexBook;
-            } else if (books.get(indexBook).getWriter().equalsIgnoreCase(input)) {
+            } else if (books.get(indexBook).getAuthor().equalsIgnoreCase(input)) {
                 return indexBook;
             }
         }
@@ -57,7 +66,7 @@ public class BookController {
         for (Book book: books) {
             if (book.getTitle().toLowerCase().contains(input.toLowerCase())) {
                 tempBook.add(book);
-            } else if (book.getWriter().toLowerCase().contains(input.toLowerCase())) {
+            } else if (book.getAuthor().toLowerCase().contains(input.toLowerCase())) {
                 tempBook.add(book);
             }
         }
@@ -84,7 +93,7 @@ public class BookController {
             if (book.getStatus().equalsIgnoreCase("active")) {
                 System.out.println("ISBN: " + book.getISBN());
                 System.out.println("Judul: " + book.getTitle());
-                System.out.println("Penulis: " + book.getWriter());
+                System.out.println("Penulis: " + book.getAuthor());
                 System.out.println("Jumlah: " + book.getAmount());
                 System.out.println();
                 bookIsNotExist = false;
