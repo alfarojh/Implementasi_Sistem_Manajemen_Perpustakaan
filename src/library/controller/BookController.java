@@ -70,7 +70,7 @@ public class BookController {
         return true;
     }
 
-    public boolean remove(String input) {
+    public boolean removeBook(String input) {
         if (isBookExistByInput(input)) {
             books.get(getIndexBookByInput(input)).deactivated();
             return true;
@@ -91,7 +91,7 @@ public class BookController {
             }
         }
         if (bookIsNotExist) {
-            System.out.println("Buku tidak tersedia");
+            System.out.println("Buku tidak tersedia.");
         }
     }
 }
