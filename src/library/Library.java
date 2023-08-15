@@ -16,7 +16,8 @@ public class Library {
     private final MemberController memberController = new MemberController();
     private final InputHandler inputHandler = new InputHandler();
 
-    public void inisiasi() {
+    // Untuk mengenerate data secara default
+    public void defaultData() {
         bookController.addBook("978-054-501-022-1",
                 "Harry Potter and the deathly hallows",
                 "J. K. Rowling");

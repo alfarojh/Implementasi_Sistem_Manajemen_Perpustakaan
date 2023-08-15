@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf8648ec-02d5-45ab-975b-79403f6b05c5" name="Changes" comment="Penambahan comment">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/library/Library.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/Library.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/library/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/library/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/library/models/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/models/Member.java" afterDir="false" />
-    </list>
+    <list default="true" id="cf8648ec-02d5-45ab-975b-79403f6b05c5" name="Changes" comment="fix bug removeMember" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -179,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1692082409645</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fix bug removeMember">
+      <option name="closed" value="true" />
+      <created>1692083399588</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1692083399588</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -206,6 +208,7 @@
     <MESSAGE value="Membuat fitur returnBorrowBook" />
     <MESSAGE value="Membuat fitur menu" />
     <MESSAGE value="Penambahan comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Penambahan comment" />
+    <MESSAGE value="fix bug removeMember" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug removeMember" />
   </component>
 </project>
