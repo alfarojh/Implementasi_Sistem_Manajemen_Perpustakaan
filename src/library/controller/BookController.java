@@ -60,19 +60,6 @@ public class BookController {
         return books.get(index);
     }
 
-    public ArrayList<Book> listBookByInput(String input) {
-        ArrayList<Book> tempBook = new ArrayList<>();
-
-        for (Book book: books) {
-            if (book.getTitle().toLowerCase().contains(input.toLowerCase())) {
-                tempBook.add(book);
-            } else if (book.getAuthor().toLowerCase().contains(input.toLowerCase())) {
-                tempBook.add(book);
-            }
-        }
-        return tempBook;
-    }
-
     public boolean addBook(String ISBN, String title, String author) {
         if (isBookExistByInput(ISBN)) return false;
         books.add(new Book(ISBN, title, author));
@@ -91,16 +78,36 @@ public class BookController {
         boolean bookIsNotExist = true;
         for (Book book: books) {
             if (book.getStatus().equalsIgnoreCase("active")) {
-                System.out.println("ISBN: " + book.getISBN());
-                System.out.println("Judul: " + book.getTitle());
-                System.out.println("Penulis: " + book.getAuthor());
-                System.out.println("Jumlah: " + book.getAmount());
-                System.out.println();
+                printInformationBook(book);
                 bookIsNotExist = false;
             }
         }
         if (bookIsNotExist) {
             System.out.println("Buku tidak tersedia.");
         }
+    }
+
+    public void showBooksByInput (String input) {
+        boolean bookIsNotExist = true;
+        for (Book book: books) {
+            if (book.getStatus().equalsIgnoreCase("active")) {
+                if (book.getTitle().toLowerCase().contains(input.toLowerCase()) ||
+                        book.getAuthor().toLowerCase().contains(input.toLowerCase())) {
+                    printInformationBook(book);
+                    bookIsNotExist = false;
+                }
+            }
+        }
+        if (bookIsNotExist) {
+            System.out.println("Buku tidak tersedia.");
+        }
+    }
+
+    private void printInformationBook(Book book) {
+        System.out.println("ISBN: " + book.getISBN());
+        System.out.println("Judul: " + book.getTitle());
+        System.out.println("Penulis: " + book.getAuthor());
+        System.out.println("Jumlah: " + book.getAmount());
+        System.out.println();
     }
 }

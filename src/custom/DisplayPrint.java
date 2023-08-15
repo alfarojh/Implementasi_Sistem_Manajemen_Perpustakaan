@@ -6,60 +6,44 @@ public class DisplayPrint {
     public String displayMenu() {
         return """
                 |=======================================|
-                |                  Menu                 |
+                |                 Menu                  |
                 |=======================================|
-                |  1.  Kelola Kategori                  |
-                |  2.  Kelola Barang                    |
-                |  3.  Transaksi                        |
+                |  1.  Manajemen Buku                   |
+                |  2.  Manajemem Member                 |
+                |  3.  Pinjam Buku                      |
+                |  4.  Kembalikan Buku                  |
+                |  5.  Tampilkan Record                 |
                 |  0.  Keluar                           |
                 |=======================================|
                 Silahkan masukkan pilihan:\s""";
     }
 
-    // Fungsi untuk menghasilkan tampilan menu kelola kategori.
-    public String displayMenuCategory() {
+    // Fungsi untuk menghasilkan tampilan menu manajemen buku.
+    public String displayBookController() {
         return """
                 |=======================================|
-                |               Kategori                |
+                |           Manajemen Buku              |
                 |=======================================|
                 |  1.  Tambah                           |
                 |  2.  Hapus                            |
-                |  3.  Update Nama                      |
-                |  4.  Tampilkan                        |
+                |  3.  Tampilkan                        |
                 |  0.  Keluar                           |
                 |=======================================|
                 Silahkan masukkan pilihan:\s""";
     }
 
     // Fungsi untuk menghasilkan tampilan menu kelola barang.
-    public String displayMenuItem() {
+    public String displayMemberController() {
         return """
                 |=======================================|
-                |                Barang                 |
+                |           Manajemen Anggota           |
                 |=======================================|
                 |  1.  Tambah                           |
                 |  2.  Hapus                            |
-                |  3.  Update Nama                      |
-                |  4.  Cari                             |
-                |  5.  Transaksi                        |
-                |  6.  Tampilkan                        |
+                |  3.  Tampilkan                        |
                 |  0.  Keluar                           |
                 |=======================================|
                 Silahkan masukkan pilihan:\s""";
     }
 
-    // Fungsi untuk menghasilkan tampilan menu transaksi.
-    public String displayTransaction() {
-        return """
-                |=======================================|
-                |                Transaksi              |
-                |=======================================|
-                |  1.  Transaksi Barang                 |
-                |  2.  Masukkan Barang ke Kategori      |
-                |  3.  Tampilkan Relasi Barang Kategori |
-                |  4.  Tampilkan Transaksi Barang       |
-                |  0.  Keluar                           |
-                |=======================================|
-                Silahkan masukkan pilihan:\s""";
-    }
 }

@@ -60,14 +60,34 @@ public class MemberController {
 
         for (Member member: members) {
             if (member.getStatus().equalsIgnoreCase("active")) {
-                System.out.println("ID Member: " + member.getId());
-                System.out.println("Nama Member: " + member.getName());
-                System.out.println();
+                printInformationMember(member);
                 memberIsNotExist = false;
             }
         }
         if (memberIsNotExist) {
             System.out.println("Member tidak tersedia.");
         }
+    }
+
+    public void showMembersByInput(String input) {
+        boolean memberIsNotExist = true;
+
+        for (Member member: members) {
+            if (member.getStatus().equalsIgnoreCase("active")) {
+                if (member.getId().equals(input) || member.getName().toLowerCase().contains(input.toLowerCase())) {
+                    printInformationMember(member);
+                    memberIsNotExist = false;
+                }
+            }
+        }
+        if (memberIsNotExist) {
+            System.out.println("Member tidak tersedia.");
+        }
+    }
+
+    private void printInformationMember(Member member) {
+        System.out.println("ID Member: " + member.getId());
+        System.out.println("Nama Member: " + member.getName());
+        System.out.println();
     }
 }

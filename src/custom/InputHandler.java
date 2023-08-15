@@ -59,6 +59,19 @@ public class InputHandler {
         return input; // Mengembalikan masukan yang sudah dihapus spasi.
     }
 
+    // Fungsi untuk menampilkan baris baru sebanyak yang ditentukan.
+    public void newLine(int... count) {
+        // Jika parameter count diberikan, cetak baris baru sebanyak count[0] kali.
+        if (count.length > 0) {
+            for (int i = 0; i < count[0]; i++) {
+                System.out.println();
+            }
+        } else {
+            // Jika tidak ada parameter count, cetak satu baris baru.
+            System.out.println();
+        }
+    }
+
     // Menutup scanner setelah penggunaan selesai
     public void close () {
         scanner.close();
