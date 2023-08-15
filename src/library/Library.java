@@ -1,6 +1,7 @@
 package library;
 
 import custom.InputHandler;
+import custom.TableGenerate;
 import library.controller.BookController;
 import library.controller.MemberController;
 import library.models.Book;
@@ -16,13 +17,24 @@ public class Library {
     private final InputHandler inputHandler = new InputHandler();
 
     public void inisiasi() {
-        bookController.addBook("123-456-789-012-1", "dfsfsfds", "dfsfdfs");
-        bookController.addBook("125-456-789-012-1", "dsfsdf", "asas");
+        bookController.addBook("978-054-501-022-1",
+                "Harry Potter and the deathly hallows",
+                "J. K. Rowling");
+        bookController.addBook("978-602-032-480-7",
+                "Harry Potter dan batu bertuah",
+                "J. K. Rowling");
+        bookController.addBook("978-602-030-175-4",
+                "Izinkan aku mencintaimu",
+                "Esi Lahur");
+        bookController.addBook("978-602-030-177-8",
+                "Dimsum daging babi",
+                "Mary Winata");
         memberController.addMember("Udin");
         memberController.addMember("Santi");
     }
 
     //=================================== Book Section ======================================
+
     public void addBook() {
         String ISBN = inputHandler.getInputText("Masukkan ISBN: ").replace("-", "");
         boolean error = true;
@@ -111,12 +123,13 @@ public class Library {
         inputHandler.newLine();
 
         if (inputBook.equals(".")) {
-            bookController.showBooks();
+            bookController.showAllBooks();
         } else {
             bookController.showBooksByInput(inputBook);
         }
-        inputHandler.newLine();
+        inputHandler.delayInput();
     }
+
     //=================================== Book Section ======================================
 
     //================================= Member Section ======================================
@@ -157,8 +170,9 @@ public class Library {
         } else{
             memberController.showMembersByInput(inputMember);
         }
-        inputHandler.newLine();
+        inputHandler.delayInput();
     }
+
     //================================= Member Section ======================================
 
 
@@ -250,13 +264,23 @@ public class Library {
             inputHandler.newLine();
             return;
         }
-        for (LibraryRecord libraryRecord: libraryRecords) {
-            System.out.println("Waktu: " + libraryRecord.getTimestamp());
-            System.out.println("Nama Member: " + libraryRecord.getMember().getName());
-            System.out.println("Judul Buku: " + libraryRecord.getBook().getTitle());
-            System.out.println("Status: " + libraryRecord.getStatusBorrow());
-            inputHandler.newLine();
+        inputHandler.newLine();
+        TableGenerate tableGenerate = new TableGenerate(
+                "Catatan Peminjaman",
+                new String[]{"Waktu", "Nama Member", "Judul Buku", "Status"},
+                new char[]{'c', 'l', 'l', 'l'},
+                new int[]{19, 50, 50, 15});
+        tableGenerate.printSubTitle();
+        for (int indexRecord = 0; indexRecord < libraryRecords.size(); indexRecord++) {
+            tableGenerate.printBody(indexRecord, new String[]{
+                    libraryRecords.get(indexRecord).getTimestamp(),
+                    libraryRecords.get(indexRecord).getMember().getName(),
+                    libraryRecords.get(indexRecord).getBook().getTitle(),
+                    libraryRecords.get(indexRecord).getStatusBorrow()
+            });
         }
+        tableGenerate.line();
+        inputHandler.delayInput();
     }
 
     //================================= Library Section =====================================

@@ -1,5 +1,6 @@
 package library.controller;
 
+import custom.TableGenerate;
 import library.models.Book;
 
 import java.util.ArrayList;
@@ -74,40 +75,34 @@ public class BookController {
         return false;
     }
 
-    public void showBooks() {
-        boolean bookIsNotExist = true;
-        for (Book book: books) {
-            if (book.getStatus().equalsIgnoreCase("active")) {
-                printInformationBook(book);
-                bookIsNotExist = false;
-            }
-        }
-        if (bookIsNotExist) {
-            System.out.println("Buku tidak tersedia.");
-        }
+    public void showAllBooks() {
+        showBooksByInput("");
     }
 
     public void showBooksByInput (String input) {
         boolean bookIsNotExist = true;
-        for (Book book: books) {
-            if (book.getStatus().equalsIgnoreCase("active")) {
-                if (book.getTitle().toLowerCase().contains(input.toLowerCase()) ||
-                        book.getAuthor().toLowerCase().contains(input.toLowerCase())) {
-                    printInformationBook(book);
+        TableGenerate tableGenerate = new TableGenerate("",
+                new String[]{"ISBN", "Judul", "Penulis", "Jumlah"},
+                new char[]{'c','l','l','c'},
+                new int[]{17, 70, 40, 6});
+        tableGenerate.printSubTitle();
+        for (int indexBook = 0; indexBook < books.size(); indexBook++) {
+            if (books.get(indexBook).getStatus().equalsIgnoreCase("active")) {
+                if (books.get(indexBook).getTitle().toLowerCase().contains(input.toLowerCase()) ||
+                        books.get(indexBook).getAuthor().toLowerCase().contains(input.toLowerCase())) {
+                    tableGenerate.printBody(indexBook, new String[]{
+                            books.get(indexBook).getISBN(),
+                            books.get(indexBook).getTitle(),
+                            books.get(indexBook).getAuthor(),
+                            String.valueOf(books.get(indexBook).getAmount())
+                    });
                     bookIsNotExist = false;
                 }
             }
         }
         if (bookIsNotExist) {
-            System.out.println("Buku tidak tersedia.");
+            tableGenerate.printMessage("Buku tidak tersedia.");
         }
-    }
-
-    private void printInformationBook(Book book) {
-        System.out.println("ISBN: " + book.getISBN());
-        System.out.println("Judul: " + book.getTitle());
-        System.out.println("Penulis: " + book.getAuthor());
-        System.out.println("Jumlah: " + book.getAmount());
-        System.out.println();
+        tableGenerate.line();
     }
 }

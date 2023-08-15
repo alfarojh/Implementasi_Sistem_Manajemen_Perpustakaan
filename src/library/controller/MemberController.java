@@ -1,5 +1,6 @@
 package library.controller;
 
+import custom.TableGenerate;
 import library.models.Member;
 
 import java.util.ArrayList;
@@ -56,38 +57,33 @@ public class MemberController {
     }
 
     public void showMembers() {
-        boolean memberIsNotExist = true;
-
-        for (Member member: members) {
-            if (member.getStatus().equalsIgnoreCase("active")) {
-                printInformationMember(member);
-                memberIsNotExist = false;
-            }
-        }
-        if (memberIsNotExist) {
-            System.out.println("Member tidak tersedia.");
-        }
+        showMembersByInput("");
     }
 
     public void showMembersByInput(String input) {
         boolean memberIsNotExist = true;
 
-        for (Member member: members) {
-            if (member.getStatus().equalsIgnoreCase("active")) {
-                if (member.getId().equals(input) || member.getName().toLowerCase().contains(input.toLowerCase())) {
-                    printInformationMember(member);
+        TableGenerate tableGenerate = new TableGenerate("",
+                new String[]{"ID", "Nama Member"},
+                new char[]{'c', 'l'},
+                new int[]{5, 50});
+        tableGenerate.printSubTitle();
+        for (int indexMember = 0; indexMember < members.size(); indexMember++) {
+            if (members.get(indexMember).getStatus().equalsIgnoreCase("active")) {
+                if (members.get(indexMember).getId().equals(input) ||
+                        members.get(indexMember).getName().toLowerCase().contains(input.toLowerCase())) {
+                    tableGenerate.printBody(indexMember, new String[]{
+                            members.get(indexMember).getId(),
+                            members.get(indexMember).getName()
+                    });
                     memberIsNotExist = false;
                 }
             }
+
         }
         if (memberIsNotExist) {
-            System.out.println("Member tidak tersedia.");
+            tableGenerate.printMessage("Member tidak tersedia.");
         }
-    }
-
-    private void printInformationMember(Member member) {
-        System.out.println("ID Member: " + member.getId());
-        System.out.println("Nama Member: " + member.getName());
-        System.out.println();
+        tableGenerate.line();
     }
 }
