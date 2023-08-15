@@ -45,10 +45,12 @@ public class Book {
         return status;
     }
 
+    // Mengembalikan objek Member
     public Member getMember() {
         return member;
     }
 
+    // Mengatur objek Member yang terkait dengan instance saat ini
     public void setMember(Member member) {
         this.member = member;
     }

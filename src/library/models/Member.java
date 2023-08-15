@@ -30,6 +30,7 @@ public class Member {
         return status;
     }
 
+    // Mengembalikan jumlah buku yang sedang dipinjam
     public int getBorrowedBookCount() {
         return borrowedBookCount;
     }
@@ -39,10 +40,12 @@ public class Member {
         this.status = "tidak aktif";
     }
 
+    // Menambahkan jumlah buku yang dipinjam
     public void borrowBook() {
         borrowedBookCount += 1;
     }
 
+    // Mengurangi jumlah buku yang dipinjam
     public void returnBook() {
         borrowedBookCount -= 1;
     }

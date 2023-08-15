@@ -174,11 +174,13 @@ public class Library {
         inputHandler.delayInput();
     }
 
+    // Menampilkan daftar buku yang tersedia di perpustakaan
     public void showBooksAvailable() {
         inputHandler.newLine();
         bookController.showBooksAvailable();
     }
 
+    // Menampilkan daftar buku yang sedang dipinjam
     public void showBooksNonAvailable() {
         inputHandler.newLine();
         bookController.showBooksNonAvailable();

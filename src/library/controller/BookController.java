@@ -122,6 +122,7 @@ public class BookController {
         tableGenerate.line();
     }
 
+    // Menampilkan daftar buku yang tersedia di perpustakaan
     public void showBooksAvailable() {
         // Inisialisasi objek TableGenerate untuk mencetak tabel
         TableGenerate tableGenerate = new TableGenerate("",
@@ -132,6 +133,8 @@ public class BookController {
 
         ArrayList<Book> uniqueTitle = new ArrayList<>();
 
+        // Mengiterasi melalui daftar buku dan memeriksa apakah buku memiliki judul unik, status "aktif", dan jumlah 1.
+        // Jika kriteria ini terpenuhi, buku akan ditambahkan ke daftar uniqueTitle.
         for (Book book: books) {
             boolean unique = true;
             for (Book book1: uniqueTitle) {
@@ -163,6 +166,7 @@ public class BookController {
         tableGenerate.line();
     }
 
+    // Menampilkan daftar buku yang sedang dipinjam
     public void showBooksNonAvailable() {
         boolean bookIsNotExist = true;
 
