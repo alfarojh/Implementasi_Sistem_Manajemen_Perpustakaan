@@ -3,116 +3,129 @@ package custom;
 import java.util.Arrays;
 
 public class TableGenerate {
-    private final String title;
-    private final String[] subTitle;
-    private final char[] alignment;
-    private final int[] textLength;
-    private final int widthTabel;
+    private final String title;       // Judul tabel
+    private final String[] subTitle;  // Array subjudul tabel
+    private final char[] alignment;   // Penjajaran teks untuk setiap kolom (c - tengah, l - kiri)
+    private final int[] textLength;   // Panjang teks untuk setiap kolom
+    private final int widthTabel;     // Lebar total tabel
 
-    // Konstruktor untuk kelas Text yang digunakan untuk mencetak teks dalam bentuk tabel.
+    // Konstruktor untuk inisialisasi objek tabel dengan berbagai parameter
     public TableGenerate(String title, String[] subTitle, char[] alignment, int[] textLength) {
-        // Inisialisasi atribut-atribut berdasarkan input yang diberikan.
         this.title = title;
         this.subTitle = subTitle;
         this.alignment = alignment;
         this.textLength = textLength;
-        // Hitung lebar tabel berdasarkan panjang teks di setiap kolom dan judul subjudul.
         widthTabel = Arrays.stream(textLength).sum() + (subTitle.length * 3) - 1;
     }
 
-    // Fungsi untuk mencetak judul tabel.
+    // Metode untuk mencetak judul tabel
     public void printTitle() {
-        line();  // Cetak garis batas atas tabel.
-        // Cetak judul tabel dengan rata kanan.
+        line();
         System.out.println("|  " + title + " ".repeat(widthTabel - title.length() - 4) + "  |");
         printSubTitle();  // Cetak subjudul tabel.
     }
 
-    // Fungsi untuk mencetak subjudul tabel.
+    // Metode untuk mencetak subjudul tabel
     public void printSubTitle() {
-        line();  // Cetak garis batas atas sub judul.
-        System.out.print("| ");
+        line(); // Mencetak garis pemisah sebelum baris subjudul
+        System.out.print("| "); // Mencetak karakter pipa pertama pada setiap baris subjudul
+
+        // Iterasi melalui setiap kolom subjudul untuk penataan teks
         for (int indexSubTitle = 0; indexSubTitle < textLength.length; indexSubTitle++) {
+            // Menghitung jumlah spasi yang diperlukan untuk memusatkan teks subjudul
             int length = (textLength[indexSubTitle] - subTitle[indexSubTitle].length()) / 2;
-            System.out.print(" ".repeat(length) + subTitle[indexSubTitle]);
+            System.out.print(" ".repeat(length) + subTitle[indexSubTitle]); // Mencetak spasi sebelum teks subjudul
+
+            // Menambahkan spasi setelah teks subjudul sesuai kebutuhan
             if ((textLength[indexSubTitle] - subTitle[indexSubTitle].length()) % 2 == 0) {
                 System.out.print(" ".repeat(length));
             } else {
                 System.out.print(" ".repeat(length + 1));
             }
+            // Mencetak karakter pipa terakhir setiap kolom subjudul
             System.out.print(" | ");
         }
-        System.out.println();
-        line();  // Cetak garis batas bawah subjudul tabel.
+
+        System.out.println(); // Pindah baris setelah mencetak seluruh baris subjudul
+        line(); // Mencetak garis pemisah setelah baris subjudul
+
     }
 
-    // Fungsi untuk mencetak isi tabel.
+    // Metode untuk mencetak isi tabel
     public void printBody(int index, String[] content) {
-        // Berikan warna biru pada baris genap untuk membedakan isi tabel.
+        // Jika indeks baris genap, gunakan warna biru
         if (index % 2 == 0) {
-            System.out.print("\033[34m"); // Warna biru (kode ANSI).
+            System.out.print("\033[34m");
         }
-        System.out.print("| ");
+
+        System.out.print("| "); // Mencetak karakter pipa pertama pada baris konten tabel
+
+        // Iterasi melalui setiap kolom konten
         for (int indexSubTitle = 0; indexSubTitle < content.length; indexSubTitle++) {
+            // Jika penjajaran adalah tengah (c) atau Tengah (C)
             if (alignment[indexSubTitle] == 'c' || alignment[indexSubTitle] == 'C') {
-                // Cetak konten rata tengah.
                 int length = (textLength[indexSubTitle] - content[indexSubTitle].length()) / 2;
-                System.out.print(" ".repeat(length) + content[indexSubTitle]);
+                System.out.print(" ".repeat(length) + content[indexSubTitle]); // Mencetak spasi sebelum teks konten
+
+                // Menambahkan spasi setelah teks konten sesuai kebutuhan
                 if ((textLength[indexSubTitle] - content[indexSubTitle].length()) % 2 == 0) {
                     System.out.print(" ".repeat(length));
                 } else {
                     System.out.print(" ".repeat(length + 1));
                 }
-                System.out.print(" | ");
+
+                System.out.print(" | "); // Mencetak karakter pipa terakhir setiap kolom konten
             } else {
-                // Cetak konten tanpa perataan (alignment) atau perataan ke kiri.
+                // Mencetak teks konten tanpa perubahan jika penjajaran bukan tengah
                 System.out.print(content[indexSubTitle] + " ".repeat(textLength[indexSubTitle] - content[indexSubTitle].length()) + " | ");
             }
         }
-        System.out.println("\u001B[0m");  // Kembalikan warna ke default (kode ANSI).
+
+        System.out.println("\u001B[0m"); // Kembalikan warna teks ke normal setelah mencetak isi tabel
+
     }
 
-    // Fungsi untuk mencetak pesan dalam bentuk tabel.
+    // Metode untuk mencetak pesan pada tabel
     public void printMessage(String message) {
-        System.out.print("| ");
+        System.out.print("| "); // Mencetak karakter pipa pertama pada baris pesan khusus
+        int length = widthTabel - message.length() - 2; // Menghitung jumlah spasi yang diperlukan untuk memusatkan pesan
+        System.out.print(" ".repeat(length / 2) + message); // Mencetak spasi sebelum pesan untuk memusatkan teks
 
-        // Hitung panjang kosong yang diperlukan untuk perataan tengah pesan dalam tabel.
-        int length = widthTabel - message.length() - 2;
-
-        // Cetak spasi pada bagian kiri pesan agar pesan terletak di tengah sel tabel.
-        System.out.print(" ".repeat(length / 2) + message);
-
-        // Cek apakah panjang kosong genap atau ganjil, lalu cetak spasi yang sesuai di bagian kanan pesan.
+        // Menambahkan spasi setelah pesan sesuai kebutuhan
         if (length % 2 == 0) {
             System.out.print(" ".repeat(length / 2));
         } else {
             System.out.print(" ".repeat(length / 2 + 1));
         }
 
-        // Cetak garis batas kanan sel tabel dan pindah baris.
-        System.out.print(" | \n");
+        System.out.print(" | \n"); // Mencetak karakter pipa terakhir dan pindah baris setelah pesan
+
     }
 
-    // Fungsi untuk mencetak pesan tombol "Keluar" dalam tabel.
-    // Parameter "index" digunakan untuk menentukan apakah baris tombol berada pada indeks genap atau ganjil.
+    // Metode untuk mencetak baris "keluar" pada tabel
     public void messageExit(int index) {
+        // Jika indeks baris genap, gunakan warna biru
         if (index % 2 == 0) {
-            System.out.print("\033[34m"); // Mengatur warna teks ke biru (kode ANSI).
+            System.out.print("\033[34m");
+
+            // Mencetak karakter pipa pertama dan spasi pada baris "keluar"
             System.out.print("|" + " ".repeat(textLength[0]/2)
                     + "0" + " ".repeat(textLength[0]/2) + "| ");
         } else {
+            // Mencetak karakter pipa pertama dan spasi pada baris "keluar" (baris ganjil)
             System.out.print("|" + " ".repeat(textLength[0]/2)
                     + "0" + " ".repeat(textLength[0]/2+ 1) + "| ");
         }
 
-        // Cetak teks "keluar" di dalam sel tombol, dengan spasi agar berada di tengah sel.
+        // Mencetak teks "keluar" dan spasi untuk memusatkan ke sisi kanan
         System.out.print("keluar" + " ".repeat(widthTabel - textLength[0] - 10) + "|");
-        System.out.println("\u001B[0m");  // Mengembalikan warna teks ke default (kode ANSI).
+
+        System.out.println("\u001B[0m"); // Mengembalikan warna teks ke normal setelah mencetak baris "keluar"
+
     }
 
-    // Fungsi untuk mencetak garis pembatas tabel.
+    // Metode untuk mencetak garis pemisah tabel
     public void line() {
         System.out.println("|" + "=".repeat(widthTabel) + "|");
     }
-
 }

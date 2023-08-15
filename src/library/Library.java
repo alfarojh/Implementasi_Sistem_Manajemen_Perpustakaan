@@ -35,44 +35,29 @@ public class Library {
 
     //=================================== Book Section ======================================
 
+    // Menambahkan buku baru ke dalam koleksi buku
     public void addBook() {
-        String ISBN = inputHandler.getInputText("Masukkan ISBN: ").replace("-", "");
-        boolean error = true;
-        while (error) {
-            error = false;
+        // Validasi dan konversi ISBN
+        String ISBN = validateISBN();
 
-            if (!ISBN.matches("\\d+")) {
-                inputHandler.errorMessage("Harus berupa bilangan bulat positif.");
-                error = true;
-            }
-            if (ISBN.length() != 13) {
-                inputHandler.errorMessage("ISBN harus mengandung 13 digit.");
-                error = true;
-            }
-            if (!error) {
-                if (bookController.isISBN_Exist(convertISBN(ISBN))) {
-                    inputHandler.errorMessage("ISBN sudah ada, ketika 'keluar' untuk kembali ke menu utama");
-                    error = true;
-                } else {
-                    break;
-                }
-            }
-
-            inputHandler.newLine();
-            ISBN = inputHandler.getInputText("Masukkan ISBN: ").replace("-", "");
-
-            if (ISBN.equalsIgnoreCase("keluar")) break;
-        }
-
+        // Jika pengguna memilih keluar, kembali ke menu utama
         if (ISBN.equalsIgnoreCase("keluar")) {
             System.out.println("Kembali ke menu utama");
+            inputHandler.newLine();
+            return;
+        }
+        // Jika ISBN sudah ada, tampilkan pesan error
+        else if (bookController.isISBN_Exist(convertISBN(ISBN))) {
+            inputHandler.errorMessage("ISBN sudah ada, kembali ke menu.");
+            inputHandler.newLine();
             return;
         }
 
-        ISBN = convertISBN(ISBN);
+        // Meminta input judul dan pengarang buku
         String title = inputHandler.getInputText("Masukkan judul buku: ");
         String author = inputHandler.getInputText("Masukkan nama pengarang: ");
 
+        // Menambahkan buku dan tampilkan pesan sesuai hasil
         if (bookController.addBook(ISBN, title, author)) {
             System.out.println("Buku berhasil ditambahkan.");
         } else {
@@ -81,30 +66,48 @@ public class Library {
         inputHandler.newLine();
     }
 
+    // Menghapus buku dari koleksi buku
     public void removeBook() {
-        String ISBN = inputHandler.getInputText("Masukkan ISBN: ");
-        if (convertISBN(ISBN).length() > 0) {
-            if (bookController.isISBN_Exist(convertISBN(ISBN))) {
-                if (bookController.removeBook(convertISBN(ISBN))) {
-                    System.out.println("Buku "
-                            + bookController.getBookByIndex(bookController.getIndexBookByInput(convertISBN(ISBN))).getTitle()
-                            + " berhasil dihapus.");
-                } else {
-                    inputHandler.errorMessage("Buku "
-                            + bookController.getBookByIndex(bookController.getIndexBookByInput(convertISBN(ISBN))).getTitle()
-                            + " gagal dihapus.");
-                }
+        // Validasi ISBN dan konfirmasi penghapusan
+        String ISBN = validateISBN();
+
+        // Jika pengguna memilih keluar, kembali ke menu utama
+        if (ISBN.equalsIgnoreCase("keluar")) {
+            System.out.println("Kembali ke menu utama");
+            inputHandler.newLine();
+            return;
+        }
+
+        String choice = inputHandler.getInputText("Apakah anda yakin ingin menghapus (Y/n)? ");
+        // Menampilkan pesan dan kembali ke menu utama jika pengguna tidak yakin
+        if (!choice.equals("Y")) {
+            System.out.println("Kembali ke menu utama");
+            inputHandler.newLine();
+            return;
+        }
+        // Jika ISBN ditemukan, proses penghapusan buku
+        else if (bookController.isISBN_Exist(ISBN)) {
+            if (bookController.removeBook(ISBN)) {
+                System.out.println("Buku "
+                        + bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getTitle()
+                        + " berhasil dihapus.");
             } else {
-                inputHandler.errorMessage("ISBN tidak ditemukan, kembali ke menu.");
-                inputHandler.newLine();
+                inputHandler.errorMessage("Buku "
+                        + bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getTitle()
+                        + " gagal dihapus.");
             }
-        } else {
-            inputHandler.errorMessage("ISBN tidak sesuai, kembali ke menu.");
+        }
+        // Jika ISBN tidak ditemukan, tampilkan pesan error
+        else {
+            inputHandler.errorMessage("ISBN tidak ditemukan, kembali ke menu.");
+            inputHandler.newLine();
         }
         inputHandler.newLine();
     }
 
+    // Mengonversi ISBN ke format yang sesuai
     private String convertISBN(String ISBN) {
+        // Proses konversi ISBN
         String input = ISBN.replace("-", "");
 
         try {
@@ -117,14 +120,51 @@ public class Library {
         }
     }
 
+    // Validasi input ISBN dan konversi ke format yang sesuai
+    private String validateISBN() {
+        // Perulangan validasi hingga input ISBN valid
+        while (true) {
+            boolean error = false;
+            System.out.println("Ketik 'keluar' untuk kembali.");
+            String ISBN = inputHandler.getInputText("Masukkan ISBN: ").replace("-", "");
+
+            // Jika pengguna memilih keluar, kembali ke menu utama
+            if (ISBN.equalsIgnoreCase("keluar")) {
+                return ISBN;
+            }
+            // Validasi bahwa input harus berupa bilangan bulat positif
+            if (!ISBN.matches("\\d+")) {
+                inputHandler.errorMessage("Harus berupa bilangan bulat positif.");
+                error = true;
+            }
+            // Validasi bahwa ISBN harus memiliki 13 digit
+            if (ISBN.length() != 13) {
+                inputHandler.errorMessage("ISBN harus mengandung 13 digit.");
+                error = true;
+            }
+
+            // Jika terdapat error, tampilkan pesan dan perulangan validasi
+            if (error) {
+                inputHandler.newLine();
+                continue;
+            }
+            // Jika tidak ada error, konversi dan kembalikan ISBN yang valid
+            return convertISBN(ISBN);
+        }
+    }
+
+    // Menampilkan daftar buku berdasarkan judul atau pengarang
     public void findBook() {
         System.out.println("Ketik '.' untuk menampilkan semua list buku.");
         String inputBook = inputHandler.getInputText("Masukkan judul / author: ");
         inputHandler.newLine();
 
+        // Jika input adalah '.', tampilkan semua buku
         if (inputBook.equals(".")) {
             bookController.showAllBooks();
-        } else {
+        }
+        // Jika input adalah judul atau pengarang, tampilkan buku yang sesuai
+        else {
             bookController.showBooksByInput(inputBook);
         }
         inputHandler.delayInput();
@@ -134,17 +174,45 @@ public class Library {
 
     //================================= Member Section ======================================
 
+    // Menambahkan anggota baru ke dalam daftar anggota
     public void addMember() {
+        System.out.println("Ketik 'keluar' untuk kembali.");
         String memberName = inputHandler.getInputText("Masukkan nama anggota baru: ");
+
+        // Jika pengguna memilih keluar, kembali ke menu utama
+        if (memberName.equalsIgnoreCase("keluar")) {
+            System.out.println("Kembali ke menu utama");
+            inputHandler.newLine();
+            return;
+        }
+
+        // Menambahkan anggota baru dan tampilkan pesan berhasil
         memberController.addMember(memberName);
         System.out.println("Penambahan member berhasil.");
         inputHandler.newLine();
     }
 
+    // Menghapus anggota dari daftar anggota
     public void removeMember() {
+        System.out.println("Ketik 'keluar' untuk kembali.");
         String memberID = String.valueOf(inputHandler.getIntegerInput("Masukkan ID member yang ingin dihapus: "));
 
-        if (memberController.isMemberExistByInput(memberID)) {
+        // Jika pengguna memilih keluar, kembali ke menu utama
+        if (memberID.equalsIgnoreCase("keluar")) {
+            System.out.println("Kembali ke menu utama");
+            inputHandler.newLine();
+            return;
+        }
+
+        String choice = inputHandler.getInputText("Apakah anda yakin (Y/n)? ");
+        // Jika pengguna tidak yakin, kembali ke menu utama
+        if (!choice.equals("Y")) {
+            System.out.println("Kembali ke menu utama");
+            inputHandler.newLine();
+            return;
+        }
+        // Jika ID anggota ditemukan, proses penghapusan
+        else if (memberController.isMemberExistByInput(memberID)) {
             if (memberController.removeMember(memberID)) {
                 System.out.println("Member "
                         + memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)).getName()
@@ -154,20 +222,26 @@ public class Library {
                         + memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)).getName()
                         + " gagal dihapus");
             }
-        } else {
+        }
+        // Jika ID anggota tidak ditemukan, tampilkan pesan error
+        else {
             inputHandler.errorMessage("ID member tidak ditemukan");
         }
         inputHandler.newLine();
     }
 
+    // Menampilkan daftar anggota berdasarkan ID atau nama
     public void findMember() {
         System.out.println("Ketik '.' untuk menampilkan semua list member.");
         String inputMember = inputHandler.getInputText("Masukkan id / nama member: ");
         inputHandler.newLine();
 
+        // Jika input adalah '.', tampilkan semua anggota
         if (inputMember.equals(".")) {
             memberController.showMembers();
-        } else{
+        }
+        // Jika input adalah ID atau nama anggota, tampilkan anggota yang sesuai
+        else {
             memberController.showMembersByInput(inputMember);
         }
         inputHandler.delayInput();
@@ -178,34 +252,46 @@ public class Library {
 
     //================================= Library Section =====================================
 
+    // Menambahkan catatan peminjaman baru ke dalam daftar catatan
     private void addRecord(Book book, Member member, boolean status) {
         libraryRecords.add(new LibraryRecord(book, member, status));
         System.out.println("Record berhasil ditambahkan.");
     }
 
+    // Meminjam buku dari perpustakaan
     public void borrowBook() {
+        System.out.println("Ketik 'keluar' untuk kembali.");
         String memberID = String.valueOf(inputHandler.getIntegerInput("Masukkan ID member yang ingin meminjam buku: "));
 
-        if (!memberController.isMemberExistByInput(memberID)) {
+        // Jika pengguna memilih keluar, kembali ke menu utama
+        if (memberID.equalsIgnoreCase("keluar")) {
+            System.out.println("Kembali ke menu utama");
+            inputHandler.newLine();
+            return;
+        }
+        // Jika anggota tidak ditemukan, tampilkan pesan error
+        else if (!memberController.isMemberExistByInput(memberID)) {
             inputHandler.errorMessage("Member tidak tersedia, kembali ke menu utama.");
             inputHandler.newLine();
             return;
         }
 
-        String ISBN = inputHandler.getInputText("Masukkan ISBN: ");
-        if (convertISBN(ISBN).length() == 0) {
-            inputHandler.errorMessage("ISBN tidak sesuai, kembali ke menu utama.");
+        String ISBN = validateISBN();
+
+        // Jika pengguna memilih keluar, kembali ke menu utama
+        if (ISBN.equalsIgnoreCase("keluar")) {
+            System.out.println("Kembali ke menu utama");
             inputHandler.newLine();
             return;
-        } else {
-            ISBN = convertISBN(ISBN);
-            if (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getAmount() == 0) {
-                System.out.println("Buku sedang dipinjam, kembali ke menu.");
-                inputHandler.newLine();
-                return;
-            }
+        }
+        // Jika jumlah buku habis, tampilkan pesan
+        else if (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getAmount() == 0) {
+            System.out.println("Buku sedang dipinjam, kembali ke menu.");
+            inputHandler.newLine();
+            return;
         }
 
+        // Meminjam buku dan menambahkan catatan peminjaman
         bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).borrowBook();
         addRecord(bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)),
                 memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)),
@@ -218,18 +304,24 @@ public class Library {
         inputHandler.newLine();
     }
 
+    // Mengembalikan buku yang telah dipinjam
     public void returnBorrowBook() {
-        String ISBN = inputHandler.getInputText("Masukkan ISBN: ");
-        if (convertISBN(ISBN).length() == 0) {
-            inputHandler.errorMessage("ISBN tidak sesuai, kembali ke menu utama.");
+        String ISBN = validateISBN();
+
+        // Jika pengguna memilih keluar, kembali ke menu utama
+        if (ISBN.equalsIgnoreCase("keluar")) {
+            System.out.println("Kembali ke menu utama");
             inputHandler.newLine();
             return;
-        } else {
-            ISBN = convertISBN(ISBN);
         }
 
         Member member = null;
-        if (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getAmount() == 1) {
+        // Memeriksa status buku dan mencari anggota yang meminjam
+        if (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getStatus().equalsIgnoreCase("tidak aktif")) {
+            System.out.println("Buku tidak tersedia.");
+            inputHandler.newLine();
+            return;
+        } else if (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getAmount() == 1) {
             System.out.println("Buku masih ada di perpustakaan.");
             inputHandler.newLine();
             return;
@@ -242,12 +334,14 @@ public class Library {
             }
         }
 
+        // Jika anggota tidak ditemukan, tampilkan pesan error
         if (member == null) {
             inputHandler.errorMessage("Gagal mengembalikan buku, kembali ke menu.");
             inputHandler.newLine();
             return;
         }
 
+        // Mengembalikan buku dan menambahkan catatan peminjaman
         bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).returnBook();
         addRecord(bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)),
                 member, false);
@@ -258,13 +352,17 @@ public class Library {
         inputHandler.newLine();
     }
 
+    // Menampilkan catatan peminjaman
     public void showRecord() {
+        // Jika tidak ada catatan, tampilkan pesan kosong
         if (libraryRecords.size() == 0) {
             System.out.println("Belum ada catatan peminjaman. \n");
             inputHandler.newLine();
             return;
         }
         inputHandler.newLine();
+
+        // Menampilkan catatan peminjaman dalam bentuk tabel
         TableGenerate tableGenerate = new TableGenerate(
                 "Catatan Peminjaman",
                 new String[]{"Waktu", "Nama Member", "Judul Buku", "Status"},
@@ -284,5 +382,5 @@ public class Library {
     }
 
     //================================= Library Section =====================================
-    
+
 }

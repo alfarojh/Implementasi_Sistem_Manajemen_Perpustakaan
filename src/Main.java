@@ -2,7 +2,6 @@
 import custom.DisplayPrint;
 import custom.InputHandler;
 import library.Library;
-import library.controller.BookController;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,10 +9,6 @@ public class Main {
         InputHandler inputHandler = new InputHandler();
         Library library = new Library();
         library.inisiasi();
-//        BookController bookController = new BookController();
-//        bookController.addBook("asda", "dasda", "sdad");
-//        bookController.addBook("dsasfds", "dasda", "sdad");
-//        bookController.showBooksByInput("");
 
         while (true) {
             try {
@@ -70,6 +65,7 @@ public class Main {
                 break;
             }
         }
+        inputHandler.close();
     }
 
 }

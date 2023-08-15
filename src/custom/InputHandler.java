@@ -3,76 +3,94 @@ package custom;
 import java.util.Scanner;
 
 public class InputHandler {
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
-    // Menampilkan pesan error dalam teks merah (untuk digunakan pada terminal yang mendukung ANSI escape code)
+    // Menampilkan pesan error dalam warna merah
     public void errorMessage(String message) {
         System.out.println("\u001B[31m" + message + "\u001B[0m");
     }
 
-    // Fungsi ini memeriksa apakah input merupakan bilangan bulat (digit) dan memiliki operator + atau -
+    // Mendapatkan input bilangan bulat dengan operator + atau -
     public int getIntegerInputWithOperator(String message) {
-        System.out.print(message); // Menampilkan pesan kepada pengguna dan mendapatkan input
+        // Menampilkan pesan input dan mengambil baris input dari pengguna
+        System.out.print(message);
         String input = scanner.nextLine().trim();
 
-        // Melakukan validasi untuk memastikan input hanya berisi digit dan merupakan bilangan positif atau negatif
+        // Selama input tidak sesuai dengan pola bilangan bulat atau operator + atau -
         while (!input.matches("^[-+]?\\d+")) {
-            // Jika input tidak valid, tampilkan pesan kesalahan dan minta input lagi
+            // Menampilkan pesan error jika input tidak sesuai
             errorMessage("Maaf, harap masukkan input berupa bilangan bulat atau menggunakan operator + atau -.");
+            newLine();
+
+            // Menampilkan ulang pesan input dan mengambil input baru dari pengguna
             System.out.print(message);
             input = scanner.nextLine().trim();
         }
-        // Mengubah input menjadi bilangan bulat dan mengembalikannya
+
+        // Mengonversi input yang valid menjadi bilangan bulat dan mengembalikannya
         return Integer.parseInt(input);
+
     }
 
-    // Fungsi ini memeriksa apakah input merupakan bilangan bulat (digit) dan memiliki operator + atau -
+    // Mendapatkan input bilangan bulat positif
     public int getIntegerInput(String message) {
-        System.out.print(message); // Menampilkan pesan kepada pengguna dan mendapatkan input
+        // Menampilkan pesan input dan mengambil baris input dari pengguna
+        System.out.print(message);
         String input = scanner.nextLine().trim();
 
-        // Melakukan validasi untuk memastikan input hanya berisi digit dan merupakan bilangan positif atau negatif
+        // Selama input tidak sesuai dengan pola bilangan bulat positif
         while (!input.matches("\\d+")) {
-            // Jika input tidak valid, tampilkan pesan kesalahan dan minta input lagi
+            // Menampilkan pesan error jika input tidak sesuai
             errorMessage("Maaf, harap masukkan input berupa bilangan bulat dan positif.");
+            newLine();
+
+            // Menampilkan ulang pesan input dan mengambil input baru dari pengguna
             System.out.print(message);
             input = scanner.nextLine().trim();
         }
-        // Mengubah input menjadi bilangan bulat dan mengembalikannya
+
+        // Mengonversi input yang valid menjadi bilangan bulat dan mengembalikannya
         return Integer.parseInt(input);
+
     }
 
-    // Fungsi untuk menunda masukan dari pengguna
+    // Menunggu input tanpa memprosesnya (untuk memberikan jeda)
     public void delayInput () {
         scanner.nextLine();
     }
 
-    // Fungsi untuk menerima masukan teks dari pengguna dengan menampilkan pesan terlebih dahulu.
+    // Mendapatkan input teks yang tidak boleh kosong
     public String getInputText(String message) {
-        System.out.print(message); // Menampilkan pesan kepada pengguna.
-        String input = scanner.nextLine().trim(); // Menerima masukan dari pengguna dan menghapus spasi di awal dan akhir.
+        // Menampilkan pesan input dan mengambil baris input dari pengguna
+        System.out.print(message);
+        String input = scanner.nextLine().trim();
+
+        // Selama input kosong, tampilkan pesan error dan minta input ulang
         while (input.equals("")) {
-            errorMessage("Maaf, input tidak boleh kosong!"); // Menampilkan pesan kesalahan jika input kosong.
-            System.out.print(message); // Menampilkan pesan kembali.
-            input = scanner.nextLine().trim(); // Menerima masukan kembali dari pengguna.
+            // Menampilkan pesan error jika input kosong
+            errorMessage("Maaf, input tidak boleh kosong!");
+            newLine();
+
+            // Menampilkan ulang pesan input dan mengambil input baru dari pengguna
+            System.out.print(message);
+            input = scanner.nextLine().trim();
         }
-        return input; // Mengembalikan masukan yang sudah dihapus spasi.
+
+        // Mengembalikan input yang valid setelah di-trim
+        return input;
+
     }
 
-    // Fungsi untuk menampilkan baris baru sebanyak yang ditentukan.
+    // Melakukan pemindahan baris sejumlah tertentu (opsional)
     public void newLine(int... count) {
-        // Jika parameter count diberikan, cetak baris baru sebanyak count[0] kali.
-        if (count.length > 0) {
-            for (int i = 0; i < count[0]; i++) {
-                System.out.println();
-            }
-        } else {
-            // Jika tidak ada parameter count, cetak satu baris baru.
+        int numLines = (count.length > 0) ? count[0] : 1;
+        for (int i = 0; i < numLines; i++) {
             System.out.println();
         }
     }
 
-    // Menutup scanner setelah penggunaan selesai
+
+    // Menutup scanner untuk menghindari kebocoran sumber daya
     public void close () {
         scanner.close();
     }
