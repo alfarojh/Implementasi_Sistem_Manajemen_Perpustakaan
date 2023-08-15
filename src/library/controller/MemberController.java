@@ -1,5 +1,6 @@
 package library.controller;
 
+import custom.InputHandler;
 import custom.TableGenerate;
 import library.models.Member;
 
@@ -53,8 +54,15 @@ public class MemberController {
     // Menonaktifkan member berdasarkan input ID atau nama
     public boolean removeMember(String input) {
         if (isMemberExistByInput(input)) {
-            members.get(getIndexMemberByInput(input)).deactivated();
-            return true;
+            if (members.get(getIndexMemberByInput(input)).getBorrowedBookCount() > 0) {
+                String choice = new InputHandler().getInputText("Member masih meminjam, apakah anda yakin (Y/n)? ");
+                if (choice.equals("Y")) {
+                    members.get(getIndexMemberByInput(input)).deactivated();
+                    return true;
+                }
+            } else {
+                return true;
+            }
         }
         return false;
     }

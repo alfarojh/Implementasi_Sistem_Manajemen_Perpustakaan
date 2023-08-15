@@ -293,6 +293,7 @@ public class Library {
 
         // Meminjam buku dan menambahkan catatan peminjaman
         bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).borrowBook();
+        memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)).borrowBook();
         addRecord(bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)),
                 memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)),
                 true);
@@ -315,7 +316,7 @@ public class Library {
             return;
         }
 
-        Member member = null;
+        int indexMember = -1;
         // Memeriksa status buku dan mencari anggota yang meminjam
         if (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getStatus().equalsIgnoreCase("tidak aktif")) {
             System.out.println("Buku tidak tersedia.");
@@ -328,14 +329,14 @@ public class Library {
         } else {
             for (int indexRecord = libraryRecords.size() - 1; indexRecord >= 0; indexRecord--) {
                 if (libraryRecords.get(indexRecord).getBook().getISBN().equals(ISBN)) {
-                    member = libraryRecords.get(indexRecord).getMember();
+                    indexMember = indexRecord;
                     break;
                 }
             }
         }
 
         // Jika anggota tidak ditemukan, tampilkan pesan error
-        if (member == null) {
+        if (indexMember < 0) {
             inputHandler.errorMessage("Gagal mengembalikan buku, kembali ke menu.");
             inputHandler.newLine();
             return;
@@ -343,12 +344,13 @@ public class Library {
 
         // Mengembalikan buku dan menambahkan catatan peminjaman
         bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).returnBook();
+        memberController.getMemberByIndex(indexMember).returnBook();
         addRecord(bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)),
-                member, false);
+                memberController.getMemberByIndex(indexMember), false);
         System.out.println("Buku "
                 + bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getTitle()
                 + " berhasil dikembalikan oleh "
-                + member.getName() + ".");
+                + memberController.getMemberByIndex(indexMember).getName() + ".");
         inputHandler.newLine();
     }
 

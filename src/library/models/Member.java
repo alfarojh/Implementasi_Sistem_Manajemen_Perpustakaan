@@ -6,11 +6,14 @@ public class Member {
     private final String name;       // Nama anggota
     private String status;     // Status anggota (aktif/tidak aktif)
 
+    private int borrowedBookCount;
+
     // Konstruktor untuk inisialisasi objek anggota
     public Member(String id, String name) {
         this.id = id;
         this.name = name;
         this.status = "aktif";   // Status awal anggota adalah aktif
+        this.borrowedBookCount = 0;
     }
 
     // Mengembalikan ID anggota
@@ -28,8 +31,20 @@ public class Member {
         return status;
     }
 
+    public int getBorrowedBookCount() {
+        return borrowedBookCount;
+    }
+
     // Menonaktifkan anggota dengan mengubah status menjadi "tidak aktif"
     public void deactivated() {
         this.status = "tidak aktif";
+    }
+
+    public void borrowBook() {
+        borrowedBookCount += 1;
+    }
+
+    public void returnBook() {
+        borrowedBookCount -= 1;
     }
 }

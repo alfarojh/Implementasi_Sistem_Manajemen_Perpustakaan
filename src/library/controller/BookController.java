@@ -76,6 +76,8 @@ public class BookController {
                     books.get(getIndexBookByInput(input)).deactivated();
                     return true;
                 }
+            } else {
+                return true;
             }
         }
         return false;
