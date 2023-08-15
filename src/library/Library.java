@@ -175,10 +175,12 @@ public class Library {
     }
 
     public void showBooksAvailable() {
+        inputHandler.newLine();
         bookController.showBooksAvailable();
     }
 
     public void showBooksNonAvailable() {
+        inputHandler.newLine();
         bookController.showBooksNonAvailable();
     }
 
