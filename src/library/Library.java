@@ -21,6 +21,9 @@ public class Library {
         bookController.addBook("978-054-501-022-1",
                 "Harry Potter and the deathly hallows",
                 "J. K. Rowling");
+        bookController.addBook("978-054-501-022-2",
+                "Harry Potter and the deathly hallows",
+                "J. K. Rowling");
         bookController.addBook("978-602-032-480-7",
                 "Harry Potter dan batu bertuah",
                 "J. K. Rowling");
@@ -169,6 +172,14 @@ public class Library {
             bookController.showBooksByInput(inputBook);
         }
         inputHandler.delayInput();
+    }
+
+    public void showBooksAvailable() {
+        bookController.showBooksAvailable();
+    }
+
+    public void showBooksNonAvailable() {
+        bookController.showBooksNonAvailable();
     }
 
     //=================================== Book Section ======================================

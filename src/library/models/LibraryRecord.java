@@ -22,7 +22,7 @@ public class LibraryRecord {
         statusBorrow = "Dipinjam";
     }
 
-    // Mengembalikan waktu dan tanggal catatan
+    // Mengembalikan waktu peminjaman
     public String getTimestampBorrow() {
         return timestampBorrow;
     }
@@ -42,6 +42,7 @@ public class LibraryRecord {
         return statusBorrow;
     }
 
+    // Mengembalikan waktu pengembalian
     public String getTimestampReturn() {
         return timestampReturn;
     }

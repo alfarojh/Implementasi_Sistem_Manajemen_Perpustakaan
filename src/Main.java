@@ -25,7 +25,9 @@ public class Main {
                                     case 0 -> throw new Exception();
                                     case 1 -> library.addBook();
                                     case 2 -> library.removeBook();
-                                    case 3 -> library.findBook();
+                                    case 3 -> library.showBooksNonAvailable();
+                                    case 4 -> library.showBooksAvailable();
+                                    case 5 -> library.findBook();
                                     default -> inputHandler.errorMessage("Input diluar batas pilihan.");
                                 }
                             } catch (Exception e) {

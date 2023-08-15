@@ -123,6 +123,75 @@ public class BookController {
     }
 
     public void showBooksAvailable() {
+        // Inisialisasi objek TableGenerate untuk mencetak tabel
+        TableGenerate tableGenerate = new TableGenerate("",
+                new String[]{"Judul", "Penulis", "Jumlah"},
+                new char[]{'l','l', 'c'},
+                new int[]{70, 40, 10});
+        tableGenerate.printSubTitle();
 
+        ArrayList<Book> uniqueTitle = new ArrayList<>();
+
+        for (Book book: books) {
+            boolean unique = true;
+            for (Book book1: uniqueTitle) {
+                if (book.getTitle().equalsIgnoreCase(book1.getTitle()) &&
+                        book.getStatus().equalsIgnoreCase("aktif") &&
+                        book.getAmount() == 1) {
+                    unique = false;
+                    break;
+                }
+            }
+            if (unique) {
+                uniqueTitle.add(book);
+            }
+        }
+
+        // Iterasi melalui daftar buku untuk mencetak tabel
+        for (int indexBook = 0; indexBook < uniqueTitle.size(); indexBook++) {
+            tableGenerate.printBody(indexBook, new String[]{
+                    uniqueTitle.get(indexBook).getTitle(),
+                    uniqueTitle.get(indexBook).getAuthor(),
+                    String.valueOf(getAmountAvailableByTitle(uniqueTitle.get(indexBook).getTitle()))
+            });
+        }
+
+        // Mencetak pesan jika buku tidak tersedia
+        if (uniqueTitle.size() == 0) {
+            tableGenerate.printMessage("Tidak ada buku di perpustakaan.");
+        }
+        tableGenerate.line();
+    }
+
+    public void showBooksNonAvailable() {
+        boolean bookIsNotExist = true;
+
+        // Inisialisasi objek TableGenerate untuk mencetak tabel
+        TableGenerate tableGenerate = new TableGenerate("",
+                new String[]{"ISBN", "Judul", "Penulis", "ID", "Nama Peminjam"},
+                new char[]{'c','l','l', 'c','l'},
+                new int[]{17, 70, 30 , 6, 30});
+        tableGenerate.printSubTitle();
+
+        // Iterasi melalui daftar buku untuk mencetak tabel
+        for (int indexBook = 0; indexBook < books.size(); indexBook++) {
+            if (books.get(indexBook).getStatus().equalsIgnoreCase("aktif") &&
+                    books.get(indexBook).getAmount() == 0) {
+                tableGenerate.printBody(indexBook, new String[]{
+                        books.get(indexBook).getISBN(),
+                        books.get(indexBook).getTitle(),
+                        books.get(indexBook).getAuthor(),
+                        books.get(indexBook).getMember().getId(),
+                        books.get(indexBook).getMember().getName()
+                });
+                bookIsNotExist = false;
+            }
+        }
+
+        // Mencetak pesan jika buku tidak tersedia
+        if (bookIsNotExist) {
+            tableGenerate.printMessage("Tidak ada buku yang dipinjam.");
+        }
+        tableGenerate.line();
     }
 }

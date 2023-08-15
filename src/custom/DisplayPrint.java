@@ -26,7 +26,9 @@ public class DisplayPrint {
                 |=======================================|
                 |  1.  Tambah                           |
                 |  2.  Hapus                            |
-                |  3.  Tampilkan                        |
+                |  3.  Tampilkan Buku yang Dipinjam     |
+                |  4.  Tampilkan Buku yang Tersedia     |
+                |  5.  Tampilkan Semua                  |
                 |  0.  Keluar                           |
                 |=======================================|
                 Silahkan masukkan pilihan:\s""";
