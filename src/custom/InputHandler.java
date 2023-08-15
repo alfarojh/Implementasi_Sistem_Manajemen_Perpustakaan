@@ -3,7 +3,7 @@ package custom;
 import java.util.Scanner;
 
 public class InputHandler {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     // Menampilkan pesan error dalam warna merah
     public void errorMessage(String message) {

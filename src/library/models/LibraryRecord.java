@@ -5,28 +5,26 @@ import java.text.SimpleDateFormat;
 
 public class LibraryRecord {
     // Menggunakan encapsulation pada timestamp, book, member dan statusBorrow
-    private final String timestamp;    // Waktu dan tanggal catatan
+    private final String timestampBorrow;    // Waktu dan tanggal catatan
     private final Book book;           // Objek buku terkait dengan catatan
     private final Member member;       // Objek anggota terkait dengan catatan
     private String statusBorrow; // Status peminjaman (Dipinjam/Dikembalikan)
+    private String timestampReturn;    // Waktu dan tanggal catatan
 
     // Konstruktor untuk membuat catatan peminjaman atau pengembalian buku
-    public LibraryRecord(Book book, Member member, boolean statusBorrow) {
+    public LibraryRecord(Book book, Member member) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        this.timestamp = format.format(timestamp);
+        this.timestampBorrow = format.format(timestamp);
         this.book = book;
         this.member = member;
-        if (statusBorrow) {
-            borrowBook();
-        } else {
-            returnBorrowedBook();
-        }
+        this.timestampReturn = null;
+        statusBorrow = "Dipinjam";
     }
 
     // Mengembalikan waktu dan tanggal catatan
-    public String getTimestamp() {
-        return timestamp;
+    public String getTimestampBorrow() {
+        return timestampBorrow;
     }
 
     // Mengembalikan objek buku terkait dengan catatan
@@ -44,13 +42,16 @@ public class LibraryRecord {
         return statusBorrow;
     }
 
-    // Fungsi untuk menandai peminjaman buku dengan status "Dipinjam"
-    public void borrowBook() {
-        statusBorrow = "Dipinjam";
+    public String getTimestampReturn() {
+        return timestampReturn;
     }
 
     // Fungsi untuk menandai pengembalian buku dengan status "Dikembalikan"
     public void returnBorrowedBook() {
         statusBorrow = "Dikembalikan";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        this.timestampReturn = format.format(timestamp);
     }
+
 }

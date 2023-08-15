@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf8648ec-02d5-45ab-975b-79403f6b05c5" name="Changes" comment="fix bug removeMember" />
+    <list default="true" id="cf8648ec-02d5-45ab-975b-79403f6b05c5" name="Changes" comment="fix bug removeMember">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/custom/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/custom/InputHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/library/Library.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/Library.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/library/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/library/models/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/models/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/library/models/LibraryRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/models/LibraryRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/library/models/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/library/models/Member.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,15 +42,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "versi1",
-    "last_opened_file_path": "F:/Alfaro/Bootcamp/Java/Bootcamp 14 Januari 2023/Implementasi Sistem Manajemen Perpustakaan"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;versi1&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/Alfaro/Bootcamp/Java/Bootcamp 14 Januari 2023/Implementasi Sistem Manajemen Perpustakaan&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\Alfaro\Bootcamp\Java\Bootcamp 14 Januari 2023\Implementasi Sistem Manajemen Perpustakaan\src" />
@@ -210,5 +218,16 @@
     <MESSAGE value="Penambahan comment" />
     <MESSAGE value="fix bug removeMember" />
     <option name="LAST_COMMIT_MESSAGE" value="fix bug removeMember" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/library/Library.java</url>
+          <line>350</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

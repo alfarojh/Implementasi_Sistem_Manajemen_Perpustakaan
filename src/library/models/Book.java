@@ -8,6 +8,8 @@ public class Book {
     private int amount;          // Jumlah buku yang tersedia
     private String status;       // Status buku (aktif/tidak aktif)
 
+    private Member member;
+
     // Konstruktor untuk inisialisasi objek buku
     public Book(String ISBN, String title, String author) {
         this.ISBN = ISBN;
@@ -15,6 +17,7 @@ public class Book {
         this.author = author;
         this.amount = 1;           // Awalnya hanya ada satu salinan buku
         this.status = "aktif";     // Status awal buku adalah aktif
+        this.member = null;
     }
 
     // Mengembalikan ISBN buku
@@ -40,6 +43,14 @@ public class Book {
     // Mengembalikan status buku (aktif/tidak aktif)
     public String getStatus() {
         return status;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     // Menonaktifkan buku dengan mengubah status menjadi "tidak aktif"

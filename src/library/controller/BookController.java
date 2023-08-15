@@ -121,4 +121,8 @@ public class BookController {
         }
         tableGenerate.line();
     }
+
+    public void showBooksAvailable() {
+
+    }
 }

@@ -254,8 +254,8 @@ public class Library {
     //================================= Library Section =====================================
 
     // Menambahkan catatan peminjaman baru ke dalam daftar catatan
-    private void addRecord(Book book, Member member, boolean status) {
-        libraryRecords.add(new LibraryRecord(book, member, status));
+    private void addRecord(Book book, Member member) {
+
         System.out.println("Record berhasil ditambahkan.");
     }
 
@@ -293,11 +293,12 @@ public class Library {
         }
 
         // Meminjam buku dan menambahkan catatan peminjaman
+        bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN))
+                .setMember(memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)));
         bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).borrowBook();
         memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)).borrowBook();
-        addRecord(bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)),
-                memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID)),
-                true);
+        libraryRecords.add(new LibraryRecord(bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN))
+                , memberController.getMemberByIndex(memberController.getIndexMemberByInput(memberID))));
         System.out.println("Buku "
                 + bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getTitle()
                 + " berhasil dipinjam oleh "
@@ -317,7 +318,7 @@ public class Library {
             return;
         }
 
-        int indexMember = -1;
+        Member member = null;
         // Memeriksa status buku dan mencari anggota yang meminjam
         if (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getStatus().equalsIgnoreCase("tidak aktif")) {
             System.out.println("Buku tidak tersedia.");
@@ -328,30 +329,36 @@ public class Library {
             inputHandler.newLine();
             return;
         } else {
-            for (int indexRecord = libraryRecords.size() - 1; indexRecord >= 0; indexRecord--) {
-                if (libraryRecords.get(indexRecord).getBook().getISBN().equals(ISBN)) {
-                    indexMember = indexRecord;
+            for (LibraryRecord libraryRecord : libraryRecords) {
+                if (libraryRecord.getBook().getISBN().equals(ISBN)) {
+                    member = libraryRecord.getMember();
                     break;
                 }
             }
         }
 
         // Jika anggota tidak ditemukan, tampilkan pesan error
-        if (indexMember < 0) {
+        if (member == null) {
             inputHandler.errorMessage("Gagal mengembalikan buku, kembali ke menu.");
             inputHandler.newLine();
             return;
         }
 
         // Mengembalikan buku dan menambahkan catatan peminjaman
+        bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).setMember(null);
         bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).returnBook();
-        memberController.getMemberByIndex(indexMember).returnBook();
-        addRecord(bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)),
-                memberController.getMemberByIndex(indexMember), false);
+        memberController.getMemberByIndex(memberController.getIndexMemberByInput(member.getId())).returnBook();
+        for (LibraryRecord libraryRecord: libraryRecords) {
+            if (libraryRecord.getBook().equals
+                    (bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)))) {
+                libraryRecord.returnBorrowedBook();
+                break;
+            }
+        }
         System.out.println("Buku "
                 + bookController.getBookByIndex(bookController.getIndexBookByInput(ISBN)).getTitle()
                 + " berhasil dikembalikan oleh "
-                + memberController.getMemberByIndex(indexMember).getName() + ".");
+                + member.getName() + ".");
         inputHandler.newLine();
     }
 
@@ -368,16 +375,17 @@ public class Library {
         // Menampilkan catatan peminjaman dalam bentuk tabel
         TableGenerate tableGenerate = new TableGenerate(
                 "Catatan Peminjaman",
-                new String[]{"Waktu", "Nama Member", "Judul Buku", "Status"},
-                new char[]{'c', 'l', 'l', 'l'},
-                new int[]{19, 50, 50, 15});
+                new String[]{"Waktu Peminjaman", "Nama Member", "Judul Buku", "Status", "Waktu Pengembalian"},
+                new char[]{'c', 'l', 'l', 'l', 'c'},
+                new int[]{19, 50, 50, 15, 19});
         tableGenerate.printSubTitle();
         for (int indexRecord = 0; indexRecord < libraryRecords.size(); indexRecord++) {
             tableGenerate.printBody(indexRecord, new String[]{
-                    libraryRecords.get(indexRecord).getTimestamp(),
+                    libraryRecords.get(indexRecord).getTimestampBorrow(),
                     libraryRecords.get(indexRecord).getMember().getName(),
                     libraryRecords.get(indexRecord).getBook().getTitle(),
-                    libraryRecords.get(indexRecord).getStatusBorrow()
+                    libraryRecords.get(indexRecord).getStatusBorrow(),
+                    String.valueOf(libraryRecords.get(indexRecord).getTimestampReturn())
             });
         }
         tableGenerate.line();

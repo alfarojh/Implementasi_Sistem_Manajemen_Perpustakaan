@@ -5,7 +5,6 @@ public class Member {
     private final String id;         // ID anggota
     private final String name;       // Nama anggota
     private String status;     // Status anggota (aktif/tidak aktif)
-
     private int borrowedBookCount;
 
     // Konstruktor untuk inisialisasi objek anggota
