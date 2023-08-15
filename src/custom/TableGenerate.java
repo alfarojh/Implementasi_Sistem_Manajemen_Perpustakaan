@@ -2,7 +2,7 @@ package custom;
 
 import java.util.Arrays;
 
-public class Text {
+public class TableGenerate {
     private final String title;
     private final String[] subTitle;
     private final char[] alignment;
@@ -10,7 +10,7 @@ public class Text {
     private final int widthTabel;
 
     // Konstruktor untuk kelas Text yang digunakan untuk mencetak teks dalam bentuk tabel.
-    public Text(String title, String[] subTitle, char[] alignment, int[] textLength) {
+    public TableGenerate(String title, String[] subTitle, char[] alignment, int[] textLength) {
         // Inisialisasi atribut-atribut berdasarkan input yang diberikan.
         this.title = title;
         this.subTitle = subTitle;
